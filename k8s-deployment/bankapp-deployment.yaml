@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: bankingapp
+  name: bankingapp-social
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: bankingapp
+    spec:
+      containers:
+      - image: liontechacademy/bankingapps:bankingapp.v1
+        name: bankingapp
+        ports:
+        - name: bankingapp
+          containerPort: 5000
+---
+# Node Port Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: bankingapp
+  name: bankingapps
+spec:
+  type: NodePort
+  ports:
+    - port: 5000
+      targetPort: 5000
+  selector:
+    name: bankingapp
+
+
+################################################ DB DEPLOYMENT. 
+
